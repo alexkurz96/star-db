@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
-const withDataDetail = (View, getData) => {
+const withDataDetail = (View) => {
   return class extends Component{
     state = {
       item: null,
@@ -32,7 +32,7 @@ const withDataDetail = (View, getData) => {
     };
   
     updateItem() {
-      const {itemId} = this.props;
+      const {itemId, getData} = this.props;
       if (!itemId) {
         return;
       }

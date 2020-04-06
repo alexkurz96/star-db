@@ -42,7 +42,7 @@ const ItemDetails = (props) => {
       </React.Fragment>
     );
   } else if (!spinner && !errorMessage) {
-    content = <span>нажмите на когото</span>;
+    content = <span>click on the left to find out more</span>;
   }
 
   return (
