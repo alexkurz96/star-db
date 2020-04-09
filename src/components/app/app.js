@@ -2,55 +2,44 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from '../people-page';
+import {PeoplePage, PlanetPage, StarshipPage} from '../pages';
 
 import './app.css';
 import SwapiService from '../../services/swapi-service';
-import ErrorButton from '../error-button';
+import DummySwapiService from '../../services/dummy-swapi-service';
 import ErrorBoundry from '../error-boundry';
 
 import {SwapiServiceProvider} from '../swapi-service-context';
 
 export default class App extends Component {
-  swapiService = new SwapiService();
-  
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    swapiService: new SwapiService()
   };
 
-  toggleRandomPlanet = () => {
-    this.setState((state) => {
+  onServiceChange = () => {
+    this.setState(({swapiService}) => {
+      const Service = swapiService instanceof SwapiService ?
+      DummySwapiService : SwapiService;
+      console.log('switched to', Service.name);
+
       return {
-        showRandomPlanet: !state.showRandomPlanet
-      }
+        swapiService: new Service()
+      };
     });
   };
 
   render() {
-
-
-    const planet = this.state.showRandomPlanet ?
-      <RandomPlanet/> :
-      null;
-      
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="stardb-app container">
-            <Header />
-            { planet }
-
-            <div className="row mb2 button-row">
-              <button
-                className="toggle-planet btn btn-warning btn-lg"
-                onClick={this.toggleRandomPlanet}>
-                Toggle Random Planet
-              </button>
-              <ErrorButton />
-            </div>
+            <Header  onServiceChange={this.onServiceChange}/>
+            <RandomPlanet />
 
             <PeoplePage />
-
+            <PlanetPage />
+            <StarshipPage />
           </div>
         </SwapiServiceProvider>
       </ErrorBoundry>

@@ -1,5 +1,5 @@
 import ItemDetails from '../item-details';
-import {withDataDetail, withSwapiService, withChildRecords} from '../hoc-helpers';
+import {compose, withDataDetail, withSwapiService, withChildRecords} from '../hoc-helpers';
 
 const renderStarshipDetails = [
 	{field: "model", label:"Model"},
@@ -14,11 +14,10 @@ const mapMethodsToProps = (swapiService) => {
 	}
 };
 
-const StarshipDetails = withSwapiService(
-	withDataDetail(
-		withChildRecords(ItemDetails, renderStarshipDetails)
-	),
-	mapMethodsToProps
-);
+const StarshipDetails = compose(
+	withSwapiService(mapMethodsToProps),
+	withDataDetail,
+	withChildRecords(renderStarshipDetails)
+)(ItemDetails);
 
 export default StarshipDetails;

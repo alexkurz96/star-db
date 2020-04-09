@@ -1,7 +1,7 @@
 import React from 'react';
 import {Record} from '../item-details';
 
-const withChildRecords = (Wrapped, components) => {
+const withChildRecords = (components) => (Wrapped) => {
 	const content = components.map(({field, label}) => {
 		return (
 			<Record field={field} label={label} key={field}/>

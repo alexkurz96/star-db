@@ -1,5 +1,5 @@
 import ItemDetails from '../item-details';
-import {withDataDetail, withSwapiService, withChildRecords} from '../hoc-helpers';
+import {compose, withDataDetail, withSwapiService, withChildRecords} from '../hoc-helpers';
 
 const renderPlanetDetails = [
 	{field: "population", label:"Population"},
@@ -14,12 +14,11 @@ const mapMethodsToProps = (swapiService) => {
 	}
 };
 
-const PlanetDetails = withSwapiService(
-	withDataDetail(
-		withChildRecords(ItemDetails, renderPlanetDetails)
-	),
-	mapMethodsToProps
-);
+const PlanetDetails = compose(
+	withSwapiService(mapMethodsToProps),
+	withDataDetail,
+	withChildRecords(renderPlanetDetails)
+)(ItemDetails);
 
 
 export default PlanetDetails;

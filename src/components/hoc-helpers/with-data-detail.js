@@ -17,7 +17,9 @@ const withDataDetail = (View) => {
     }
   
     componentDidUpdate(prevProps) {
-      if (this.props.itemId !== prevProps.itemId) {
+      if (this.props.itemId !== prevProps.itemId ||
+        this.props.getData !== prevProps.getData ||
+        this.props.getImageUrl !== prevProps.getImageUrl) {
         this.updateItem();
       }
     }
@@ -36,7 +38,11 @@ const withDataDetail = (View) => {
       if (!itemId) {
         return;
       }
-      this.setState({loading: true});
+      this.setState({
+        loading: true,
+        error: false,
+        data: null
+      });
       getData(itemId)
         .then(this.onItemLoaded)
         .catch(this.onError);

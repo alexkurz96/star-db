@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ErrorButton from '../error-button';
-
 import './item-details.css';
 
 const Record = ({data, field, label}) => {
@@ -37,7 +35,6 @@ const ItemDetails = (props) => {
               })
             }
           </ul>
-          <ErrorButton />
         </div>
       </React.Fragment>
     );

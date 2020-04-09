@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './item-list.css';
 
@@ -6,7 +7,7 @@ const ItemList = (props) => {
   const {data, errorMessage, spinner, 
     onItemSelected, children} = props;
   let content = null;
-  if (data && !errorMessage) {
+  if (data && !errorMessage && !spinner) {
     content = data.map((item) => {
       const {id} = item;
       const label = children(item);
@@ -31,6 +32,16 @@ const ItemList = (props) => {
       </ul>
     </React.Fragment>
   );
+};
+
+ItemList.defaultProps = {
+  onItemSelected: () => {}
+};
+
+ItemList.propTypes = {
+  onItemSelected: PropTypes.func,
+  data: PropTypes.arrayOf(PropTypes.object),
+  children: PropTypes.func.isRequired
 };
 
 export default ItemList;
