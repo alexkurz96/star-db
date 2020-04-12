@@ -1,9 +1,35 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import './header.css';
 
-const Header = ({onServiceChange}) => {
+const Header = ({onServiceChange, location}) => {
+
+  const buttonsData = [
+    {name: 'people', label: 'People'},
+    {name: 'planets', label: 'Planets'},
+    {name: 'starships', label: 'Starships'},
+    {name: 'login', label: 'Login'},
+    {name: 'secret', label: 'Secret'}
+  ];
+  
+  const buttons = buttonsData.map(({name, label}) => {
+    const isActive = location.pathname.split('/')[1] === name;
+    const clazz = isActive ? 'active' : '';
+    return (
+      <li
+        key={name}
+      >
+        <Link 
+          to={`/${name}/`}
+          className={clazz}
+        >
+          {label}
+        </Link>
+      </li>
+    );
+  });
+
   return (
     <div className="header d-flex">
       <h3>
@@ -12,21 +38,7 @@ const Header = ({onServiceChange}) => {
         </Link>
       </h3>
       <ul className="d-flex">
-        <li>
-          <Link to="/people/">People</Link>
-        </li>
-        <li>
-          <Link to="/planets/">Planets</Link>
-        </li>
-        <li>
-          <Link to="/starships/">Starships</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/secret">Secret</Link>
-        </li>
+        {buttons}
       </ul>
       <button
         onClick={onServiceChange}
@@ -38,4 +50,4 @@ const Header = ({onServiceChange}) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
