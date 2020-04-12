@@ -30,3 +30,7 @@
   height: 35px;
   margin-top: 3px;
 }
+
+.active {
+  color: #fff;
+}

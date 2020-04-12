@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './item-details.css';
 
@@ -16,7 +17,7 @@ export {
 };
 
 const ItemDetails = (props) => {
-  const {data, image, errorMessage, spinner, children} = props;
+  const {data, image, errorMessage, spinner, children, classNames} = props;
   let content = null;
   if (data && !spinner && !errorMessage) {
     const {name} = data;
@@ -43,12 +44,25 @@ const ItemDetails = (props) => {
   }
 
   return (
-    <div className="item-details card">
+    <div className={classNames}>
       {spinner}
       {content}
       {errorMessage}
     </div>
   );
+};
+
+ItemDetails.defaultProps = {
+  classNames: "item-details card"
+};
+
+ItemDetails.propTypes = {
+  data: PropTypes.object,
+  image: PropTypes.string,
+  children: PropTypes.arrayOf(PropTypes.element),
+  errorMessage: PropTypes.element, 
+  spinner: PropTypes.element,
+  classNames: PropTypes.string
 };
 
 export default ItemDetails;
